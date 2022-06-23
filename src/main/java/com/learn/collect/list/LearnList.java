@@ -4,6 +4,7 @@ import com.learn.vo.WatermarkEffect;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class LearnList {
@@ -11,7 +12,7 @@ public class LearnList {
     public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException {
         List<WatermarkEffect> effectList = new ArrayList<WatermarkEffect>();
         WatermarkEffect effect1 = new WatermarkEffect();
-        WatermarkEffect effect2= new WatermarkEffect();
+        WatermarkEffect effect2 = new WatermarkEffect();
         WatermarkEffect effect3 = new WatermarkEffect();
 
         effect1.setIsOpen("1");
@@ -25,13 +26,18 @@ public class LearnList {
         effectList.add(effect2);
         effectList.add(effect3);
 
-       List<String>  list = effectList.stream().filter(a->"1".equals(a.getIsOpen())).map(WatermarkEffect::getWatermarkName).collect(Collectors.toList());
-       System.out.println(list.toString());
-
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm");
         Date sysDate = new Date();
         System.out.println(simpleDateFormat.format(sysDate));
 
         effect3.getClass().getField("isOpen").get(effect3);
+
+
+        Map<String,Object> map = effectList.stream().filter(a->a.getIsOpen().equals("1")).collect(Collectors.toMap(WatermarkEffect::getWatermarkName, new Function<WatermarkEffect, Object>() {
+            @Override
+            public Object apply(WatermarkEffect watermarkEffect) {
+                return null;
+            }
+        }));
     }
 }
